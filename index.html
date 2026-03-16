@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickBot — AI Customer Support for Any Business</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--border:#2a2a3a;--text:#e8e8f0;--text2:#9494a8;--accent:#6c5ce7;--accent2:#a29bfe;--green:#00cec9;--orange:#fdcb6e;--radius:12px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,10,15,.8);border-bottom:1px solid var(--border)}
+.logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:var(--text2);font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border-radius:50px;font-weight:600;font-size:.9rem;border:none;cursor:pointer;transition:all .3s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(108,92,231,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(108,92,231,.5)}
+.btn-outline{border:1px solid var(--border);background:transparent;color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);background:rgba(108,92,231,.1)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 50% 50%,rgba(108,92,231,.08) 0%,transparent 50%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:50px;background:var(--surface);border:1px solid var(--border);font-size:.8rem;color:var(--text2);margin-bottom:2rem}
+.hero-badge span{color:var(--green);font-weight:600}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;font-weight:900;margin-bottom:1.5rem}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent2),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.2rem;color:var(--text2);max-width:600px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.hero-visual{margin-top:4rem;position:relative;max-width:900px;margin-left:auto;margin-right:auto}
+.chat-window{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:left}
+.chat-header{padding:1rem 1.5rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.chat-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--green));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff}
+.chat-header-info h4{font-size:.9rem;font-weight:600}
+.chat-header-info p{font-size:.75rem;color:var(--green)}
+.chat-body{padding:1.5rem;min-height:300px;display:flex;flex-direction:column;gap:1rem}
+.msg{max-width:80%;padding:.75rem 1rem;border-radius:12px;font-size:.9rem;line-height:1.5;animation:msgIn .4s ease}
+.msg-bot{background:var(--surface2);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px}
+.msg-user{background:linear-gradient(135deg,var(--accent),#8b5cf6);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem}
+.chat-input input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:.75rem 1.25rem;color:var(--text);font-size:.9rem;outline:none}
+.chat-input input:focus{border-color:var(--accent)}
+.chat-input button{width:40px;height:40px;border-radius:50%;background:var(--accent);border:none;color:#fff;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section{padding:6rem 2rem}
+.section-label{font-size:.8rem;text-transform:uppercase;letter-spacing:3px;color:var(--accent2);font-weight:600;margin-bottom:1rem}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;margin-bottom:1rem}
+.section-sub{color:var(--text2);font-size:1.1rem;max-width:600px;line-height:1.7;margin-bottom:3rem}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;transition:all .3s}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 30px rgba(108,92,231,.15)}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+.fi-purple{background:rgba(108,92,231,.15);color:var(--accent2)}
+.fi-green{background:rgba(0,206,201,.15);color:var(--green)}
+.fi-orange{background:rgba(253,203,110,.15);color:var(--orange)}
+.feature-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.feature-card p{font-size:.9rem;color:var(--text2);line-height:1.6}
+.steps{display:flex;gap:2rem;max-width:1000px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.step{flex:1;min-width:250px;text-align:center;padding:2rem}
+.step-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.step h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.step p{font-size:.9rem;color:var(--text2);line-height:1.6}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:950px;margin:0 auto}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;position:relative;transition:all .3s}
+.price-card.popular{border-color:var(--accent);box-shadow:0 10px 40px rgba(108,92,231,.2)}
+.price-card.popular::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),#8b5cf6);color:#fff;font-size:.7rem;font-weight:700;padding:.4rem 1rem;border-radius:50px;letter-spacing:1px}
+.price-card h3{font-size:1rem;color:var(--text2);font-weight:500;margin-bottom:.5rem}
+.price-amount{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;margin-bottom:.25rem}
+.price-amount span{font-size:1rem;font-weight:400;color:var(--text2)}
+.price-desc{font-size:.85rem;color:var(--text2);margin-bottom:1.5rem}
+.price-features{list-style:none;margin-bottom:2rem}
+.price-features li{padding:.4rem 0;font-size:.9rem;color:var(--text2)}
+.price-features li::before{content:'\2713';color:var(--green);font-weight:700;margin-right:.5rem}
+.price-card .btn{width:100%;justify-content:center}
+.cta-section{text-align:center;padding:6rem 2rem;background:linear-gradient(180deg,transparent,rgba(108,92,231,.05))}
+.cta-section h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;margin-bottom:1rem}
+.cta-section p{color:var(--text2);font-size:1.1rem;margin-bottom:2rem}
+footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center;color:var(--text2);font-size:.85rem}
+@media(max-width:768px){.nav-links{display:none}.hero h1{font-size:2.2rem}.steps{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav><div class="logo">QuickBot</div><div class="nav-links"><a href="#features">Features</a><a href="#how">How It Works</a><a href="#pricing">Pricing</a><a href="https://paypal.me/FaresWazni" target="_blank" class="btn btn-primary">Get Started Free</a></div></nav>
+<section class="hero"><div>
+<div class="hero-badge">🚀 <span>Now in Beta</span> — AI support that learns your business</div>
+<h1>Your AI employee<br>that never <em>sleeps</em></h1>
+<p>Drop a smart AI chatbot on your website in 2 minutes. It learns your business, answers customers 24/7, and books appointments — so you don't have to.</p>
+<div class="hero-ctas"><a href="https://paypal.me/FaresWazni" target="_blank" class="btn btn-primary">Get Started →</a><a href="#demo" class="btn btn-outline">See Live Demo</a></div>
+<div class="hero-visual" id="demo"><div class="chat-window"><div class="chat-header"><div class="chat-avatar">QB</div><div class="chat-header-info"><h4>QuickBot Assistant</h4><p>● Online — typically replies instantly</p></div></div><div class="chat-body" id="chatBody"><div class="msg msg-bot">Hey there! 👋 I'm the AI assistant for Prestige Dental Clinic. How can I help you today?</div></div><div class="chat-input"><input type="text" id="chatInput" placeholder="Try: 'Do you accept walk-ins?'" /><button onclick="sendMsg()">↑</button></div></div></div>
+</div></section>
+<section class="section" id="features" style="text-align:center"><div class="section-label">Why QuickBot</div><div class="section-title" style="margin-left:auto;margin-right:auto">Everything your front desk does.<br>Without the front desk.</div><p class="section-sub" style="margin-left:auto;margin-right:auto">QuickBot trains on your website, docs, and FAQs — then handles customer questions, scheduling, and lead capture like a pro.</p><div class="features-grid"><div class="feature-card"><div class="feature-icon fi-purple">🧠</div><h3>Learns Your Business</h3><p>Paste your URL. QuickBot scrapes your site and trains itself on your services, hours, pricing, and policies. No manual setup.</p></div><div class="feature-card"><div class="feature-icon fi-green">💬</div><h3>Answers Everything</h3><p>Handles FAQs, pricing questions, service details, and directions. Escalates to a human only when necessary.</p></div><div class="feature-card"><div class="feature-icon fi-orange">📅</div><h3>Books Appointments</h3><p>Integrates with Google Calendar, Calendly, or your booking system. Customers book directly from the chat.</p></div><div class="feature-card"><div class="feature-icon fi-purple">📊</div><h3>Captures Leads</h3><p>Collects emails, phone numbers, and intent data. Sends leads to your CRM or inbox in real time.</p></div><div class="feature-card"><div class="feature-icon fi-green">🎨</div><h3>Fully Branded</h3><p>Match your colors, logo, tone of voice, and personality. Your brand, not ours.</p></div><div class="feature-card"><div class="feature-icon fi-orange">⚡</div><h3>2-Minute Install</h3><p>Copy one line of code. Paste it in your site. You're live. Works on WordPress, Shopify, Wix, Squarespace, and custom sites.</p></div></div></section>
+<section class="section" id="how" style="text-align:center"><div class="section-label">How It Works</div><div class="section-title" style="margin-left:auto;margin-right:auto">Live in three steps</div><div class="steps"><div class="step"><div class="step-num">01</div><h3>Paste Your Website URL</h3><p>QuickBot crawls your site and learns your business — services, hours, pricing, location, and FAQs.</p></div><div class="step"><div class="step-num">02</div><h3>Customize Your Bot</h3><p>Set your brand colors, greeting message, and escalation rules. Upload extra docs if needed.</p></div><div class="step"><div class="step-num">03</div><h3>Embed & Go Live</h3><p>Copy a single script tag. Paste it on your site. Your AI assistant is live and handling customers.</p></div></div></section>
+<section class="section" id="pricing" style="text-align:center"><div class="section-label">Simple Pricing</div><div class="section-title" style="margin-left:auto;margin-right:auto">Less than a part-time employee. Smarter than most full-timers.</div><p class="section-sub" style="margin-left:auto;margin-right:auto;margin-bottom:3rem">No contracts. Cancel anytime. 14-day free trial on all plans.</p><div class="pricing-grid"><div class="price-card"><h3>Starter</h3><div class="price-amount">$49<span>/mo</span></div><div class="price-desc">For small businesses and solo operators</div><ul class="price-features"><li>1 chatbot</li><li>1,000 messages/month</li><li>Website scraping & training</li><li>Lead capture</li><li>Email support</li></ul><a href="https://paypal.me/FaresWazni/49" target="_blank" class="btn btn-outline">Start Now — $49/mo</a></div><div class="price-card popular"><h3>Growth</h3><div class="price-amount">$99<span>/mo</span></div><div class="price-desc">For growing businesses that need more</div><ul class="price-features"><li>3 chatbots</li><li>5,000 messages/month</li><li>Appointment booking</li><li>CRM integration</li><li>Custom branding</li><li>Priority support</li></ul><a href="https://paypal.me/FaresWazni/99" target="_blank" class="btn btn-primary">Start Now — $99/mo</a></div><div class="price-card"><h3>Agency</h3><div class="price-amount">$249<span>/mo</span></div><div class="price-desc">For agencies managing multiple clients</div><ul class="price-features"><li>Unlimited chatbots</li><li>25,000 messages/month</li><li>White-label (your brand)</li><li>API access</li><li>Reseller dashboard</li><li>Dedicated support</li></ul><a href="#" class="btn btn-outline">Contact Sales</a></div></div></section>
+<section class="cta-section"><h2>Stop losing customers to slow replies.</h2><p>Join 200+ businesses using QuickBot to convert more visitors into customers.</p><a href="https://paypal.me/FaresWazni" target="_blank" class="btn btn-primary">Get Started — Pay via PayPal →</a></section>
+<footer><p>© 2026 QuickBot. Built by Fares. All rights reserved.</p></footer>
+<script>
+const demoResponses={"walk-in":"Yes! We accept walk-ins Monday through Friday, 9 AM to 5 PM. However, we recommend booking an appointment for shorter wait times. Would you like me to schedule one for you?","price":"Our services start at $75 for a basic cleaning.\n• Basic Cleaning: $75\n• Deep Cleaning: $150\n• Whitening: $299\n• Consultation: Free\n\nWould you like to book an appointment?","hours":"We are open Monday–Friday 8 AM to 6 PM, and Saturday 9 AM to 2 PM. Closed on Sundays. Want me to book you in?","book":"I would love to help you book! What day and time works best for you? We have openings this week on Wednesday at 2 PM and Thursday at 10 AM.","insurance":"We accept most major dental insurance plans including Delta Dental, Cigna, Aetna, and MetLife. I can verify your specific plan — what is your insurance provider?","default":"Great question! Let me look that up for you. In the meantime, would you like to book an appointment or speak with our team directly? You can also call us at (555) 123-4567."};
+function getResponse(msg){msg=msg.toLowerCase();if(msg.includes('walk')||msg.includes('drop'))return demoResponses['walk-in'];if(msg.includes('price')||msg.includes('cost')||msg.includes('much'))return demoResponses['price'];if(msg.includes('hour')||msg.includes('open')||msg.includes('close'))return demoResponses['hours'];if(msg.includes('book')||msg.includes('appoint')||msg.includes('schedule'))return demoResponses['book'];if(msg.includes('insurance')||msg.includes('accept')||msg.includes('cover'))return demoResponses['insurance'];return demoResponses['default'];}
+function sendMsg(){const input=document.getElementById('chatInput');const body=document.getElementById('chatBody');const text=input.value.trim();if(!text)return;body.innerHTML+='<div class="msg msg-user">'+text+'</div>';input.value='';body.scrollTop=body.scrollHeight;setTimeout(()=>{const dots=document.createElement('div');dots.className='msg msg-bot';dots.id='typing';dots.textContent='...';body.appendChild(dots);body.scrollTop=body.scrollHeight;setTimeout(()=>{dots.remove();body.innerHTML+='<div class="msg msg-bot">'+getResponse(text)+'</div>';body.scrollTop=body.scrollHeight;},800);},300);}
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg();});
+</script>
+</body></html>
